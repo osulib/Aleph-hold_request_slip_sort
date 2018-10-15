@@ -55,6 +55,13 @@ rm -f "$tempFile"* >&/dev/null
 rm -f "$counterTempFile"* >&/dev/null
 
 #check if ue-06 is not running, which may result in colision 
+
+#RC1 20181015 - ue_06_active_hours can be set in $alephe_root/aleph_start, then it is OK.
+#    Still, is this var is set in $data_root/prof_library, it has not beeen detected by `env` , if this script is run by Aleph job_list
+#    The script $data_root/prof_librar must be called first.
+source "$alephe_dev/$admBase/prof_library"
+#RC1 end
+
 if ( `ps -ef | grep ue_06 | grep $admBase -i -c | bc` > 0 && `echo "$argv[*]" | grep '\-f' -c | bc` < 1 ) then
    if ( `env | grep ue_06_active_hours -c | bc` > 0 ) then
       set ueDueHours = `env | grep ue_06_active_hours | sed 's/^.*= *//'`
