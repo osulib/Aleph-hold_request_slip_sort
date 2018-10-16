@@ -120,8 +120,6 @@ endif
      endif
      if ( $xslTemplateFormat == '') then
        set xslTemplateFormat = `grep -oh '<form-format>[^<]\+</form-format>' * | sed 's/<[^>]*>//g' | head -1`
-     else
-        set xslTemplateFormat = `echo $xslTemplate | sed 's/[^0-9]//g'`
      endif
 
      #loop over files
