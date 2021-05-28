@@ -126,13 +126,14 @@ endif
      foreach fileName ( `grep -H '<form-name>hold-request-slip' $requestFiles | sed 's/:.*//' | xargs grep '<z30-call-no-key>' | sort -k2 --field-separator=: | sed 's/:.*//'`)
         set callNoKey = ` grep '<z30-call-no-key>' $fileName  | sed -e 's/<[^>]*>//g' | sed 's/ //g' `
         set fileNameExtension = `echo $fileName | sed 's/.*\.//g'`
-        #RC20201123 if pickup location is different to item sublibrary, print this separately
-        set subLib = ` grep '<z30-sub-library>' $fileName  | sed -e 's/<[^>]*>//g' | sed 's/ //g' `
-        set pickup = ` grep '<z37-pickup-location>' $fileName  | sed -e 's/<[^>]*>//g' | sed 's/ //g' `
-        if ( $sublib != $pickup ) then
-           set fileNameExtension = "$pickup.$fileNameExtension" #20210528
-        endif
-       #RC20201123 end
+          #RC20201123 if pickup location is different to item sublibrary, print this separately
+          #  20210528 NO!! slip must be printed according to item home sublibrary, regardeless the pickup-location
+  #        set subLib = ` grep '<z30-sub-library>' $fileName  | sed -e 's/<[^>]*>//g' | sed 's/ //g' `
+#        set pickup = ` grep '<z37-pickup-location>' $fileName  | sed -e 's/<[^>]*>//g' | sed 's/ //g' `
+#        if ( $subLib != $pickup ) then
+#           set fileNameExtension = "$pickup.$fileNameExtension" #20210528
+#        endif
+        #RC20201123 end
 
         if ( -f "$counterTempFile.$fileNameExtension" ) then 
            set counterExt = `cat "$counterTempFile.$fileNameExtension" | awk '{print $1;}'`
