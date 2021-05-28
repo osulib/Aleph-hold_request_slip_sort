@@ -130,7 +130,7 @@ endif
         set subLib = ` grep '<z30-sub-library>' $fileName  | sed -e 's/<[^>]*>//g' | sed 's/ //g' `
         set pickup = ` grep '<z37-pickup-location>' $fileName  | sed -e 's/<[^>]*>//g' | sed 's/ //g' `
         if ( $sublib != $pickup ) then
-           fileNameExtension = "$pickup.$fileNameExtension"
+           set fileNameExtension = "$pickup.$fileNameExtension" #20210528
         endif
        #RC20201123 end
 
